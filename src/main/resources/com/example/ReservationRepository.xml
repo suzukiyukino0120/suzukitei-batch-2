@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ReservationRepository">
+	
+	<resultMap type="com.example.ReservationRepository" id="reservationMap">
+		<id property="id" column="id"></id>
+		<result property="planId" column="plan_id"></result>
+		<result property="checkinDate" column="checkin_date"></result>
+		<result property="stayDays" column="stay_days"></result>
+		<result property="numOfGuest" column="num_of_guest"></result>
+		<result property="payMethod" column="pay_method"></result>
+		<result property="totalPrice" column="total_price"></result>
+	</resultMap>
+	
+	<select id="find" resultType="com.example.Reservation" >
+		select 
+			plan_id, 
+			checkin_date, 
+			stay_days, 
+			num_of_guest, 
+			pay_method, 
+			total_price 
+		from reservation 
+		where DATE_ADD(checkin_date, INTERVAL stay_days DAY) = CURDATE()
+	</select>
+
+</mapper>
